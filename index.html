@@ -175,7 +175,7 @@ def update_files(url_ids=sheet_ids): #run this section initially!
         
         <!-- THE INTERACTIVE MAP EMBED -->
         <div class="map-wrapper">
-            <iframe src="interactive_map.html"></iframe>
+            <iframe src="spot_density_map.html"></iframe>
         </div>
 
 <!-- Code block toggle -->
@@ -230,8 +230,8 @@ def explore_data(filename):
         </details>
     </section>
     <section>
-        <h2>Phase 3: Log-Log Regression Modeling (R Analysis)</h2>
-        <p>To verify the relationship between infrastructure density and national economic development, we eliminate countries without coverage parameters and construct a log-log linear model.</p>
+        <h2>Phase 3: Log Regression Modeling (R Analysis)</h2>
+        <p>To test the relationship between GDP per Capita and Spot Density, we eliminate countries without streetview coverage and construct a log linear model.</p>
         
         <details>
             <summary>▶ Click to view R Statistical Analysis Code</summary>
@@ -264,12 +264,20 @@ print(summary_model)</code></pre>
             My analysis shows some interesting results of the relation between the independent variable of GDP per Capita and
 the dependent variable of the density of spotworthy cars on google streetview per km^2 of land. With an R-squared of 0.5524 and a significant p-value of <2.2e^-16 has strong evidence to suggest there is a positive linear log-log relationship between both variables. Possible confounding variables include: 
 
+
+    
 Google streetview coverage. Google streetview is not available in many countries, with varying coverage frequencies and coverage resolution in countries. The more frequencies and the more recent the data, the more spotworthy cars. If there was a way to measure panoramic density, the number of google streetview panoramas in a country, we could likely get a far closer estimate of the relationship between GDP per Capita and the density of spotworthy cars on google streetview.
 
+
+    
 Local government vehicle laws: Some countries have very strict vehicle import laws whereas some have very relaxed laws. For example, buying a car in a country like Denmark has a significant premium to encourage alternate modes of transport. Other countries might have really good public transport infrastructure while not emphasizing anti-car policies, whereas on the opposite end of the spectrum countries might heavily underinvest in alternate transport methods (such as the United Arab Emirates.)
 
+
+    
 Concentration of spotting: The original spots list is a community-composed list of spots by the community that choose where to spot and do not randomly sample all streetview panoramas. This means areas with higher densities (Fig 2.) are more likely to be spotted at, leading towards inherent time allocation and spot bias. More rare and exotic cars are more desirable to add to the spots list as well, thus leading to a bias where these rare and more spotworthy cars are documented, and tend to be more concentrated in the same dense areas. This means countries that scored with quite high negative residuals on the spots list are likely to be undervalued and have far more spots in them than anticipated.
 
+
+    
 The coefficient of GDP per Capita, the dependent variable is 1.99, with a standard error of 0.1756 for the coefficient. This means for every 1% increase in GDP per Capita, there is on average a 1.99% increase in spot density.
         </p>
     </section>
