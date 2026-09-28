@@ -185,6 +185,15 @@ def update_files(url_ids=sheet_ids): #run this section initially!
 import geopandas
 import matplotlib.pyplot as plt
 
+def interactive_map(world_map):
+    bins=[0, 0.001, 0.01, 0.1, 1] 
+    interactive_map = world_map.explore(column='Spot_density', cmap='Blues', scheme='UserDefined', legend=True, #Graphs Spots per square km.
+                   classification_kwds={'bins': bins}, tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+                   attr="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ", tooltip=['NAME', 'Spot_density'],
+                   legend_kwds={'loc':'lower left', 'title': 'Spots per square km', 'colorbar': False, 'scale': False, 'fmt':'{:.3f}'}
+    )
+    interactive_map.save('spot_density_map.html')
+
 def explore_data(filename):
     '''Processes data into a GeoDataFrame.'''
     coord_file = pandas.read_csv(filename, low_memory=False) #Due to the nature of the conflicts, Finland gets inflated, UK gets aggregated.
@@ -220,12 +229,13 @@ def explore_data(filename):
     world_map['Spot_density'] = world_map['Spot_density'].round(3)
     bins=[0, 0.001, 0.01, 0.1, 1]
     interactive_map = world_map.explore(column='Spot_density', cmap='Blues', scheme='UserDefined', legend=True, #Graphs Spots per square km.
-                   classification_kwds={'bins': bins}, tiles='cartodbpositron', tooltip=['NAME', 'Spot_density'],
+                   classification_kwds={'bins': bins}, tiles="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
+                   attr="Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ", tooltip=['NAME', 'Spot_density'],
                    legend_kwds={'loc':'lower left', 'title': 'Spots per square km', 'colorbar': False, 'scale': False, 'fmt':'{:.3f}'}
     )
     
-    #world_map.to_csv('World_map.csv')
-    return interactive_map.save('spot_density_map.html') #swap this with to_csv to export for R
+    interactive_map(world_map)
+    return world_map.to_csv('World_map.csv')
     </code></pre>
         </details>
     </section>
